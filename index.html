@@ -39,20 +39,46 @@
       --g-bdr2: rgba(255,255,255,0.05);
     }
 
+    /* ===== FIX GETAR MOBILE ===== */
+    /* Pakai img fixed + cover, bukan background-size:cover */
     .bg-photo-fixed {
       position: fixed; inset: 0; z-index: 0;
-      background-size: cover; background-position: center top;
       pointer-events: none;
+      overflow: hidden;
+      /* Force GPU layer sendiri, biar nggak ikut repaint */
+      transform: translate3d(0,0,0);
+      will-change: transform;
+      backface-visibility: hidden;
+      -webkit-backface-visibility: hidden;
+    }
+    .bg-photo-fixed img {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      object-fit: cover;
+      object-position: center top;
+      /* Lock ke GPU */
+      transform: translate3d(0,0,0);
+      backface-visibility: hidden;
+      -webkit-backface-visibility: hidden;
     }
     .bg-base {
       position: fixed; inset: 0; z-index: 1;
       background: rgba(5,5,5,0.72);
       pointer-events: none;
+      transform: translate3d(0,0,0);
+      will-change: transform;
+      backface-visibility: hidden;
+      -webkit-backface-visibility: hidden;
     }
     .bg-blob {
       position: fixed; border-radius: 50%;
       filter: blur(100px); opacity: 0.5;
       z-index: 1; pointer-events: none;
+      transform: translate3d(0,0,0);
+      will-change: transform;
+      backface-visibility: hidden;
+      -webkit-backface-visibility: hidden;
     }
     .bg-blob-1 {
       width: 400px; height: 400px;
@@ -75,6 +101,7 @@
     ::-webkit-scrollbar-thumb { background: var(--goldD); border-radius: 3px; }
     ::selection { background: var(--gold); color: var(--dark); }
 
+    /* Glass — di mobile, blur dimatikan, pakai solid fallback */
     .glass {
       background: var(--g-bg);
       backdrop-filter: blur(24px) saturate(140%);
@@ -93,6 +120,38 @@
       box-shadow: 0 4px 24px rgba(0,0,0,0.25);
       position: relative; overflow: hidden;
     }
+    .photo-glass {
+      background: var(--g-bg);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      border: 1px solid var(--g-bdr);
+      border-radius: 18px; padding: 6px;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+      position: relative; overflow: hidden;
+    }
+
+    /* ===== MOBILE: matikan semua backdrop-filter ===== */
+    @media (hover: none) and (pointer: coarse) {
+      .glass, .glass2, .photo-glass,
+      .btn-open, .btn-c, .mbtn, .hero .db,
+      .music-btn, .wc, .fg input, .fg select, .fg textarea,
+      .ag label {
+        backdrop-filter: none !important;
+        -webkit-backdrop-filter: none !important;
+      }
+      /* Ganti glass background jadi lebih solid biar tetap kelihatan */
+      .glass { background: rgba(10,10,10,0.88) !important; }
+      .glass2 { background: rgba(15,15,15,0.85) !important; }
+      .photo-glass { background: rgba(10,10,10,0.85) !important; }
+      .btn-open { background: rgba(255,255,255,0.1) !important; }
+      .mbtn { background: rgba(0,0,0,0.7) !important; }
+      .music-btn { background: rgba(0,0,0,0.75) !important; }
+      .hero .db { background: rgba(0,0,0,0.6) !important; }
+      .wc { background: rgba(0,0,0,0.55) !important; }
+      .fg input, .fg select, .fg textarea { background: rgba(255,255,255,0.08) !important; }
+      .ag label { background: rgba(0,0,0,0.5) !important; }
+      .btn-c { background: rgba(0,0,0,0.6) !important; }
+    }
 
     /* ===== COVER ===== */
     .cover {
@@ -100,11 +159,16 @@
       display: flex; flex-direction: column;
       align-items: center; justify-content: center;
       transition: opacity 1.2s ease, visibility 1.2s ease;
+      transform: translate3d(0,0,0);
+      will-change: opacity;
     }
     .cover.out { opacity: 0; visibility: hidden; pointer-events: none; }
     .cover-photo {
       position: absolute; inset: 0;
       background-size: cover; background-position: center top; z-index: 0;
+      transform: translate3d(0,0,0);
+      backface-visibility: hidden;
+      -webkit-backface-visibility: hidden;
     }
     .cover-photo::after {
       content: ''; position: absolute; inset: 0;
@@ -180,6 +244,7 @@
       display: flex; align-items: center; justify-content: center;
       cursor: pointer; transition: all 0.3s;
       box-shadow: 0 4px 16px rgba(0,0,0,0.3);
+      transform: translate3d(0,0,0);
     }
     .music-btn:hover { background: var(--gold); color: var(--dark); }
     .mb { display: flex; align-items: flex-end; gap: 2px; height: 14px; }
@@ -214,7 +279,7 @@
     }
     .main.show { display: block; opacity: 1; }
 
-    /* ===== SECTION BASE — JARAK DIPERKECIL ===== */
+    /* ===== SECTION BASE ===== */
     .s { padding: 20px 16px; position: relative; overflow: visible; }
     .si {
       max-width: 480px; margin: 0 auto;
@@ -369,14 +434,6 @@
       width: 100%; height: 100%; object-fit: cover;
       filter: sepia(8%) brightness(0.9); transition: transform 0.6s;
     }
-    .cc .photo-glass {
-      background: var(--g-bg);
-      backdrop-filter: blur(18px); -webkit-backdrop-filter: blur(18px);
-      border: 1px solid var(--g-bdr);
-      border-radius: 18px; padding: 6px;
-      box-shadow: 0 8px 32px rgba(0,0,0,0.3);
-      position: relative; overflow: hidden;
-    }
     .cc h3 {
       font-family: 'Great Vibes', cursive;
       font-size: 26px; color: var(--goldL); margin-bottom: 2px;
@@ -460,8 +517,15 @@
       width: 100%; height: 100%; object-fit: cover;
       transition: transform 0.8s, filter 0.8s;
       filter: brightness(0.85) sepia(8%);
+      /* Fix getar: lock img ke GPU layer */
+      transform: translate3d(0,0,0);
+      backface-visibility: hidden;
+      -webkit-backface-visibility: hidden;
     }
-    .gi:hover img { transform: scale(1.08); filter: brightness(1) sepia(0%); }
+    .gi:hover img {
+      transform: translate3d(0,0,0) scale(1.08);
+      filter: brightness(1) sepia(0%);
+    }
     .gi.land { grid-column: span 2; aspect-ratio: 16/9; }
     .gi.sq { aspect-ratio: 1; }
     .gi::after {
@@ -575,6 +639,7 @@
       flex-direction: column; gap: 8px;
       max-height: 350px; overflow-y: auto;
       padding-right: 4px; position: relative; z-index: 2;
+      -webkit-overflow-scrolling: touch;
     }
     .wl::-webkit-scrollbar { width: 3px; }
     .wl::-webkit-scrollbar-thumb { background: var(--goldD); border-radius: 2px; }
@@ -694,8 +759,18 @@
     .ptc-w {
       position: fixed; inset: 0; z-index: 2;
       pointer-events: none; overflow: hidden;
+      transform: translate3d(0,0,0);
+      will-change: transform;
+      backface-visibility: hidden;
+      -webkit-backface-visibility: hidden;
     }
-    .ptc { position: absolute; opacity: 0; animation: pf linear infinite; }
+    .ptc {
+      position: absolute; opacity: 0;
+      animation: pf linear infinite;
+      will-change: transform, opacity;
+      backface-visibility: hidden;
+      -webkit-backface-visibility: hidden;
+    }
     .ptc-d { border-radius: 50%; background: var(--goldD); }
     .ptc-dm {
       border-radius: 1px; background: transparent;
@@ -719,6 +794,7 @@
       opacity: 0; transform: translateY(30px) scale(0.97);
       transition: opacity 0.9s cubic-bezier(0.4,0,0.2,1),
                   transform 0.9s cubic-bezier(0.4,0,0.2,1);
+      will-change: opacity, transform;
     }
     .rv.vis { opacity: 1; transform: translateY(0) scale(1); }
     .rv2 { transition-delay: 0.15s; }
@@ -739,7 +815,10 @@
 </head>
 <body>
 
-  <div class="bg-photo-fixed" style="background-image:url('https://res.cloudinary.com/drxdkzn5f/image/upload/q_auto/f_auto/v1780645257/sertyjdgnzbvfx_oeep7h.png')"></div>
+  <!-- Background: pakai <img> bukan CSS background, biar nggak getar -->
+  <div class="bg-photo-fixed">
+    <img src="https://res.cloudinary.com/drxdkzn5f/image/upload/q_auto/f_auto/v1780645257/sertyjdgnzbvfx_oeep7h.png" alt="">
+  </div>
   <div class="bg-base"></div>
   <div class="bg-blob bg-blob-1"></div>
   <div class="bg-blob bg-blob-2"></div>
@@ -769,7 +848,6 @@
   <!-- MAIN -->
   <div class="main" id="mainContent">
 
-    <!-- Hero -->
     <section class="s hero">
       <div class="hero-ov"></div>
       <div class="si">
@@ -787,7 +865,6 @@
       </div>
     </section>
 
-    <!-- Ayat -->
     <section class="s vs">
       <div class="si">
         <div class="vm rv">&#10078;</div>
@@ -798,7 +875,6 @@
       </div>
     </section>
 
-    <!-- Couple -->
     <section class="s cs">
       <div class="si">
         <p class="sl rv">Mempelai</p>
@@ -833,7 +909,6 @@
       </div>
     </section>
 
-    <!-- Events -->
     <section class="s es">
       <div class="si">
         <p class="sl rv">Waktu &amp; Tempat</p>
@@ -866,7 +941,6 @@
       </div>
     </section>
 
-    <!-- Gallery -->
     <section class="s gs">
       <div class="si">
         <p class="sl rv">Galeri Foto</p>
@@ -879,7 +953,6 @@
       </div>
     </section>
 
-    <!-- Location -->
     <section class="s ls">
       <div class="si">
         <p class="sl rv">Lokasi</p>
@@ -900,7 +973,6 @@
       </div>
     </section>
 
-    <!-- RSVP -->
     <section class="s rs">
       <div class="si glass">
         <p class="sl rv">Konfirmasi Kehadiran</p>
@@ -938,7 +1010,6 @@
       </div>
     </section>
 
-    <!-- Wishes -->
     <section class="s ws">
       <div class="si glass">
         <p class="sl rv">Doa &amp; Ucapan</p>
@@ -948,7 +1019,6 @@
       </div>
     </section>
 
-    <!-- Gift -->
     <section class="s gfs">
       <div class="si glass">
         <p class="sl rv">Amplop Digital</p>
@@ -979,7 +1049,6 @@
       </div>
     </section>
 
-    <!-- Footer -->
     <div class="ft">
       <div class="fn rv">Jefri &amp; Felis</div>
       <div class="fd rv">10 &#8226; 10 &#8226; 2026</div>
