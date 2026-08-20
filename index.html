@@ -39,10 +39,17 @@
       --g-bdr2: rgba(255,255,255,0.05);
     }
 
+    /* ===== BACKGROUND — pakai background-size: cover, bukan img ===== */
     .bg-photo-fixed {
-      position: fixed; inset: 0; z-index: 0;
-      background-size: cover; background-position: center top;
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      z-index: 0;
       pointer-events: none;
+      background-image: url('https://res.cloudinary.com/drxdkzn5f/image/upload/q_auto/f_auto/v1780645257/sertyjdgnzbvfx_oeep7h.png');
+      background-size: cover;
+      background-position: center top;
+      background-repeat: no-repeat;
     }
     .bg-base {
       position: fixed; inset: 0; z-index: 1;
@@ -94,7 +101,6 @@
       position: relative; overflow: hidden;
     }
 
-    /* ===== COVER ===== */
     .cover {
       position: fixed; inset: 0; z-index: 9999;
       display: flex; flex-direction: column;
@@ -214,7 +220,6 @@
     }
     .main.show { display: block; opacity: 1; }
 
-    /* ===== SECTION BASE — JARAK DIPERKECIL ===== */
     .s { padding: 20px 16px; position: relative; overflow: visible; }
     .si {
       max-width: 480px; margin: 0 auto;
@@ -256,7 +261,6 @@
       transform: rotate(45deg); flex-shrink: 0;
     }
 
-    /* ===== HERO ===== */
     .hero {
       min-height: 100vh;
       display: flex; flex-direction: column;
@@ -320,7 +324,6 @@
       to { opacity: 1; transform: translateY(0); }
     }
 
-    /* ===== AYAT ===== */
     .vs .si {
       background: var(--g-bg);
       backdrop-filter: blur(24px) saturate(140%);
@@ -349,7 +352,6 @@
       position: relative; z-index: 2;
     }
 
-    /* ===== COUPLE ===== */
     .cs .si {
       background: transparent; backdrop-filter: none;
       border: none; box-shadow: none;
@@ -392,7 +394,6 @@
     }
     .cc .soc a:hover { color: var(--goldL); }
 
-    /* ===== EVENTS ===== */
     .es .si {
       background: transparent; backdrop-filter: none;
       border: none; box-shadow: none;
@@ -442,7 +443,6 @@
       background: linear-gradient(90deg, transparent, rgba(201,168,76,0.15), transparent); z-index: 2;
     }
 
-    /* ===== GALLERY ===== */
     .gs .si {
       background: transparent; backdrop-filter: none;
       border: none; box-shadow: none;
@@ -470,7 +470,6 @@
       pointer-events: none;
     }
 
-    /* ===== LOCATION ===== */
     .ls .si {
       background: transparent; backdrop-filter: none;
       border: none; box-shadow: none;
@@ -507,7 +506,6 @@
       box-shadow: 0 4px 20px rgba(0,0,0,0.3);
     }
 
-    /* ===== RSVP ===== */
     .rs .si { padding: 28px 24px; }
     .rf {
       margin-top: 18px; display: flex;
@@ -568,7 +566,6 @@
       transform: translateY(-1px);
     }
 
-    /* ===== WISHES ===== */
     .ws .si { padding: 28px 24px; }
     .wl {
       margin-top: 16px; display: flex;
@@ -602,7 +599,6 @@
       line-height: 1.7; font-weight: 300; font-style: italic;
     }
 
-    /* ===== GIFT ===== */
     .gfs .si { padding: 28px 24px; }
     .gfc {
       display: flex; flex-direction: column;
@@ -664,7 +660,6 @@
     }
     .btn-c:hover { background: var(--gold); color: var(--dark); }
 
-    /* ===== FOOTER ===== */
     .ft {
       text-align: center; padding: 28px 20px 24px;
       position: relative; z-index: 3;
@@ -690,7 +685,6 @@
     .ft .fo span { width: 24px; height: 1px; background: var(--goldD); }
     .ft .fo i { color: var(--goldD); font-size: 7px; }
 
-    /* ===== PARTICLES ===== */
     .ptc-w {
       position: fixed; inset: 0; z-index: 2;
       pointer-events: none; overflow: hidden;
@@ -714,7 +708,6 @@
       100% { opacity: 0; transform: translateY(-10vh) scale(1); }
     }
 
-    /* ===== REVEAL ===== */
     .rv {
       opacity: 0; transform: translateY(30px) scale(0.97);
       transition: opacity 0.9s cubic-bezier(0.4,0,0.2,1),
@@ -739,14 +732,14 @@
 </head>
 <body>
 
-  <div class="bg-photo-fixed" style="background-image:url('https://res.cloudinary.com/drxdkzn5f/image/upload/q_auto/f_auto/v1780645257/sertyjdgnzbvfx_oeep7h.png')"></div>
+  <!-- Background: pakai background-size cover, bukan img tag -->
+  <div class="bg-photo-fixed"></div>
   <div class="bg-base"></div>
   <div class="bg-blob bg-blob-1"></div>
   <div class="bg-blob bg-blob-2"></div>
   <div class="bg-blob bg-blob-3"></div>
   <div class="ptc-w" id="ptcW"></div>
 
-  <!-- COVER -->
   <div class="cover" id="cover">
     <div class="cover-photo" style="background-image:url('https://res.cloudinary.com/drxdkzn5f/image/upload/q_auto/f_auto/v1780645257/sertyjdgnzbvfx_oeep7h.png')"></div>
     <div class="cover-content">
@@ -766,10 +759,8 @@
   </button>
   <div class="toast" id="toast"></div>
 
-  <!-- MAIN -->
   <div class="main" id="mainContent">
 
-    <!-- Hero -->
     <section class="s hero">
       <div class="hero-ov"></div>
       <div class="si">
@@ -787,7 +778,6 @@
       </div>
     </section>
 
-    <!-- Ayat -->
     <section class="s vs">
       <div class="si">
         <div class="vm rv">&#10078;</div>
@@ -798,7 +788,6 @@
       </div>
     </section>
 
-    <!-- Couple -->
     <section class="s cs">
       <div class="si">
         <p class="sl rv">Mempelai</p>
@@ -833,7 +822,6 @@
       </div>
     </section>
 
-    <!-- Events -->
     <section class="s es">
       <div class="si">
         <p class="sl rv">Waktu &amp; Tempat</p>
@@ -866,7 +854,6 @@
       </div>
     </section>
 
-    <!-- Gallery -->
     <section class="s gs">
       <div class="si">
         <p class="sl rv">Galeri Foto</p>
@@ -879,7 +866,6 @@
       </div>
     </section>
 
-    <!-- Location -->
     <section class="s ls">
       <div class="si">
         <p class="sl rv">Lokasi</p>
@@ -900,7 +886,6 @@
       </div>
     </section>
 
-    <!-- RSVP -->
     <section class="s rs">
       <div class="si glass">
         <p class="sl rv">Konfirmasi Kehadiran</p>
@@ -938,7 +923,6 @@
       </div>
     </section>
 
-    <!-- Wishes -->
     <section class="s ws">
       <div class="si glass">
         <p class="sl rv">Doa &amp; Ucapan</p>
@@ -948,7 +932,6 @@
       </div>
     </section>
 
-    <!-- Gift -->
     <section class="s gfs">
       <div class="si glass">
         <p class="sl rv">Amplop Digital</p>
@@ -979,7 +962,6 @@
       </div>
     </section>
 
-    <!-- Footer -->
     <div class="ft">
       <div class="fn rv">Jefri &amp; Felis</div>
       <div class="fd rv">10 &#8226; 10 &#8226; 2026</div>
@@ -995,6 +977,7 @@
   </audio>
 
   <script>
+    /* ===== PARTICLES ===== */
     (function() {
       var c = document.getElementById('ptcW');
       var types = [
@@ -1018,6 +1001,7 @@
       });
     })();
 
+    /* ===== GUEST FROM URL ===== */
     (function() {
       var params = new URLSearchParams(window.location.search);
       var gName = params.get('to') || '';
@@ -1028,6 +1012,7 @@
       }
     })();
 
+    /* ===== OPEN INVITATION ===== */
     document.getElementById('btnOpen').addEventListener('click', function() {
       document.getElementById('cover').classList.add('out');
       var main = document.getElementById('mainContent');
@@ -1046,6 +1031,7 @@
       window.scrollTo(0, 0);
     });
 
+    /* ===== MUSIC ===== */
     var isPlaying = false;
     document.getElementById('musicBtn').addEventListener('click', function() {
       var audio = document.getElementById('bgM');
@@ -1059,6 +1045,7 @@
       }
     });
 
+    /* ===== REVEAL ===== */
     function initReveal() {
       var observer = new IntersectionObserver(function(entries) {
         entries.forEach(function(entry) {
@@ -1068,6 +1055,7 @@
       document.querySelectorAll('.rv').forEach(function(el) { observer.observe(el); });
     }
 
+    /* ===== WISHES ===== */
     var wishes;
     try { wishes = JSON.parse(localStorage.getItem('wWishes')); } catch(e) { wishes = null; }
     if (!wishes || !wishes.length) {
@@ -1088,6 +1076,7 @@
     }
     renderWishes();
 
+    /* ===== RSVP ===== */
     document.getElementById('rsvpForm').addEventListener('submit', function(e) {
       e.preventDefault();
       var nm = document.getElementById('rName').value.trim();
@@ -1100,6 +1089,7 @@
       document.getElementById('rW').value = '';
     });
 
+    /* ===== COPY ===== */
     document.querySelectorAll('.btn-c[data-copy]').forEach(function(btn) {
       btn.addEventListener('click', function() {
         var text = this.getAttribute('data-copy');
@@ -1118,6 +1108,7 @@
       showToast('Nomor rekening berhasil disalin!');
     }
 
+    /* ===== TOAST ===== */
     function showToast(msg) {
       var t = document.getElementById('toast');
       t.textContent = msg; t.classList.add('show');
